@@ -23,28 +23,38 @@ const PropertyTaxCertificateCalculator = () => {
     return Number.parseInt(value.replace(/,/g, "")) || 0
   }
 
-  // 建物固定資産税入力処理
+  // 建物固定資産税入力処理を修正
   const handleBuildingPropertyTaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formatted = formatNumber(e.target.value)
-    setBuildingPropertyTax(formatted)
+    // 入力中はカンマを取り除いた値を使用
+    const rawValue = e.target.value.replace(/,/g, "")
+    setBuildingPropertyTax(rawValue)
   }
 
-  // 建物都市計画税入力処理
+  // 建物都市計画税入力処理を修正
   const handleBuildingCityPlanningTaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formatted = formatNumber(e.target.value)
-    setBuildingCityPlanningTax(formatted)
+    // 入力中はカンマを取り除いた値を使用
+    const rawValue = e.target.value.replace(/,/g, "")
+    setBuildingCityPlanningTax(rawValue)
   }
 
-  // 土地固定資産税入力処理
+  // 土地固定資産税入力処理を修正
   const handleLandPropertyTaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formatted = formatNumber(e.target.value)
-    setLandPropertyTax(formatted)
+    // 入力中はカンマを取り除いた値を使用
+    const rawValue = e.target.value.replace(/,/g, "")
+    setLandPropertyTax(rawValue)
   }
 
-  // 土地都市計画税入力処理
+  // 土地都市計画税入力処理を修正
   const handleLandCityPlanningTaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 入力中はカンマを取り除いた値を使用
+    const rawValue = e.target.value.replace(/,/g, "")
+    setLandCityPlanningTax(rawValue)
+  }
+
+  // フォーカスが外れたときにフォーマットを適用する関数を追加
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<string>>) => {
     const formatted = formatNumber(e.target.value)
-    setLandCityPlanningTax(formatted)
+    setter(formatted)
   }
 
   // うるう年判定
@@ -165,6 +175,7 @@ const PropertyTaxCertificateCalculator = () => {
                   type="text"
                   value={buildingPropertyTax}
                   onChange={handleBuildingPropertyTaxChange}
+                  onBlur={(e) => handleBlur(e, setBuildingPropertyTax)}
                   className="w-full px-3 py-2 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="168,000"
                 />
@@ -175,6 +186,7 @@ const PropertyTaxCertificateCalculator = () => {
                   type="text"
                   value={buildingCityPlanningTax}
                   onChange={handleBuildingCityPlanningTaxChange}
+                  onBlur={(e) => handleBlur(e, setBuildingCityPlanningTax)}
                   className="w-full px-3 py-2 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="36,000"
                 />
@@ -198,6 +210,7 @@ const PropertyTaxCertificateCalculator = () => {
                   type="text"
                   value={landPropertyTax}
                   onChange={handleLandPropertyTaxChange}
+                  onBlur={(e) => handleBlur(e, setLandPropertyTax)}
                   className="w-full px-3 py-2 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                   placeholder="84,000"
                 />
@@ -208,6 +221,7 @@ const PropertyTaxCertificateCalculator = () => {
                   type="text"
                   value={landCityPlanningTax}
                   onChange={handleLandCityPlanningTaxChange}
+                  onBlur={(e) => handleBlur(e, setLandCityPlanningTax)}
                   className="w-full px-3 py-2 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                   placeholder="36,000"
                 />
